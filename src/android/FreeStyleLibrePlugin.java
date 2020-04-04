@@ -1051,7 +1051,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                 String alldump="";
                 JSONObject respObj = new JSONObject();
                 byte[][] allBlocks = new byte[40][8];
-                for(int i=0; i <= 40; i++) { 
+                for(int i=3; i <= 40; i++) { 
                     byte[] cmd = new byte[] {
                             (byte)0x00, // Flags
                             (byte)0x20, // Command: Read multiple blocks
