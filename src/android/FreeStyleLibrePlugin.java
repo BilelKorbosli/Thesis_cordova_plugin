@@ -1024,7 +1024,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
         //return Float.valueOf( Float.valueOf((val & bitmask) / 6) - 37);
 
         Float processedGlucose = ((val & 0x0FFF) / 6f) - 37f;
-        processedGlucose = ((processedGlucose*1.088f)-9.2f)/18;
+        processedGlucose = ((processedGlucose*1.088f)-9.2f)/18.0f;
             return processedGlucose;
     }
     /**
@@ -1051,7 +1051,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                 String alldump="";
                 JSONObject respObj = new JSONObject();
                 byte[][] allBlocks = new byte[40][8];
-                for(int i=3; i <= 40; i++) { 
+                for(int i=3; i <= 100; i++) { 
                     byte[] cmd = new byte[] {
                             (byte)0x00, // Flags
                             (byte)0x20, // Command: Read multiple blocks
