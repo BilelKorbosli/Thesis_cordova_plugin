@@ -1051,7 +1051,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                 String alldump="";
                 JSONObject respObj = new JSONObject();
                 byte[][] allBlocks = new byte[40][8];
-                for(int i=3; i <= 42; i++) { 
+                for(int i=3; i <= 40; i++) { 
                     byte[] cmd = new byte[] {
                             (byte)0x00, // Flags
                             (byte)0x20, // Command: Read multiple blocks
@@ -1067,17 +1067,19 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                 int minutesSinceStart = Integer.parseInt(alldump.substring(586, 588) + alldump.substring(584, 586), 16);
                 float currentGlucose = 0f;
                 int ii = 0;
+                string gg = "";
                 for (int i = 8; i < 188; i += 12) {
                     final String g = alldump.substring(i + 2, i + 4) + alldump.substring(i, i + 2);
 
                     if (current == ii) {
                         currentGlucose = glucoseReading(Integer.parseInt(g, 16));
+                        gg =g;
                     }
                     ii++;
                 }
             try{
                 respObj.put("currentGlucose",currentGlucose);
-                respObj.put("Current",99);
+                respObj.put("Current",gg);
                 respObj.put("allDump", alldump);
                 respObj.put("allBlocks",allBlocks);
             } catch (JSONException e) {
