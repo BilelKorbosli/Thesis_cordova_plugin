@@ -1018,6 +1018,11 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
             }
         });
     }
+    private float glucoseReading(int val) {
+        // ((0x4531 & 0xFFF) / 6) - 37;
+        int bitmask = 0x0FFF;
+        return Float.valueOf( Float.valueOf((val & bitmask) / 6) - 37);
+    }
     /**
      * Send raw commands to the tag and receive the response.
      *
@@ -1055,11 +1060,11 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                     alldump = alldump + Util.bytesToHex(allBlocks[i - 3]);
                 }
                 int current = Integer.parseInt(alldump.substring(4, 6), 16);
-                int minutesSinceStart = Integer.parseInt(completeBlocks.substring(586, 588) + completeBlocks.substring(584, 586), 16);
+                int minutesSinceStart = Integer.parseInt(alldump.substring(586, 588) + alldump.substring(584, 586), 16);
                 float currentGlucose = 0f;
                 int ii = 0;
                 for (int i = 8; i < 188; i += 12) {
-                    final String g = completeBlocks.substring(i + 2, i + 4) + completeBlocks.substring(i, i + 2);
+                    final String g = alldump.substring(i + 2, i + 4) + alldump.substring(i, i + 2);
 
                     if (current == ii) {
                         currentGlucose = glucoseReading(Integer.parseInt(g, 16));
