@@ -1067,7 +1067,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                 int minutesSinceStart = Integer.parseInt(alldump.substring(586, 588) + alldump.substring(584, 586), 16);
                 float currentGlucose = 0f;
                 int ii = 0;
-                string gg = "";
+                String gg = "";
                 for (int i = 8; i < 188; i += 12) {
                     final String g = alldump.substring(i + 2, i + 4) + alldump.substring(i, i + 2);
 
