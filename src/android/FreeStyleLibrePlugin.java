@@ -1077,7 +1077,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                 }
             try{
                 respObj.put("currentGlucose",currentGlucose);
-                respObj.put("Current",current);
+                respObj.put("Current",88);
                 respObj.put("allDump", alldump);
                 respObj.put("allBlocks",allBlocks);
             } catch (JSONException e) {
