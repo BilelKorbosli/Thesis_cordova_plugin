@@ -1,0 +1,17 @@
+{
+  "name": "cordova-plugin-freeStyle-Libre",
+  "version": "0.0.1",
+  "description": "FreeStyle libre NFC Glucose plugin",
+  "cordova": {
+    "id": "cordova-plugin-freeStyle-Libre",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "Bilel",
+  "license": "ISC"
+}
