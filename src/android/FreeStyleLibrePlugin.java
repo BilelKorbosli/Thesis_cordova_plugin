@@ -1073,7 +1073,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                 }
                 respObj.put("currentGlucose",currentGlucose);
                 respObj.put("Current",current);
-                respObj.put("allDump", allDump);
+                respObj.put("allDump", alldump);
                 respObj.put("allBlocks",allBlocks);
                 //byte[] response = (byte[]) transceiveMethod.invoke(tagTechnology, data);
                 //repHex = Util.bytesToHex(response);
