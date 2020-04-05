@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Base64;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 // using wildcard imports so we can support Cordova 3.x
 import org.apache.cordova.*; // Cordova 3.x
@@ -1064,7 +1065,11 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
 
                     //response = Arrays.copyOfRange(response, 1, response.length);
                     allBlocks[i - 3] = Arrays.copyOf(response, response.length);
+                    try{
                     baos.write(Arrays.copyOf(response, response.length));
+                    }catch(IOException e){
+
+                    }
                     alldump = alldump + Util.bytesToHex(allBlocks[i - 3]);
                 }
                 
