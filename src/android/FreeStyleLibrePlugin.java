@@ -1070,7 +1070,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                     }catch(IOException e){
 
                     }
-                    alldump = alldump + Util.bytesToHex(allBlocks[i - 3]);
+                    alldump = alldump + Util.bytesToHex(allBlocks[i - 3])+"\n\r";
                 }
                 
                 int current = Integer.parseInt(alldump.substring(4, 6), 16);
