@@ -1063,14 +1063,14 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                     };
                     byte[] response = (byte[]) transceiveMethod.invoke(tagTechnology, cmd);
 
-                    response = Arrays.copyOfRange(response, 1, response.length);
+                    //response = Arrays.copyOfRange(response, 1, response.length);
                     allBlocks[i - 3] = Arrays.copyOf(response, response.length);
                     try{
-                    baos.write(allBlocks[i - 3] );
+                    baos.write(Arrays.copyOf(response, response.length));
                     }catch(IOException e){
 
                     }
-                    alldump = alldump + Util.bytesToHex(allBlocks[i - 3])+"\n\r";
+                    alldump = alldump + Util.bytesToHex(allBlocks[i - 3])+"-";
                 }
                 
                 int current = Integer.parseInt(alldump.substring(4, 6), 16);
