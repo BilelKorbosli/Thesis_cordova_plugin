@@ -1078,11 +1078,13 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                     ii++;
                 }
             try{
+                byte[] encoded = Base64.getEncoder().encode(allBlocks);
+
                 respObj.put("currentGlucose",currentGlucose);
                 respObj.put("ii",ii);
                 respObj.put("gg",gg);
                 respObj.put("allDump", alldump);
-                respObj.put("allBlocks",allBlocks);
+                respObj.put("allBlocks", new String(encoded));
             } catch (JSONException e) {
                 //some exception handler code.
             }  
