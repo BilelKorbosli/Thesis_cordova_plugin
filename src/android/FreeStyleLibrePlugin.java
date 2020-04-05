@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Base64;
+import java.io.ByteArrayOutputStream;
 
 // using wildcard imports so we can support Cordova 3.x
 import org.apache.cordova.*; // Cordova 3.x
@@ -1052,6 +1053,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                 String alldump="";
                 JSONObject respObj = new JSONObject();
                 byte[][] allBlocks = new byte[40][8];
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 for(int i=3; i <= 40; i++) { 
                     byte[] cmd = new byte[] {
                             (byte)0x00, // Flags
@@ -1062,8 +1064,10 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
 
                     //response = Arrays.copyOfRange(response, 1, response.length);
                     allBlocks[i - 3] = Arrays.copyOf(response, response.length);
+                    baos.write(Arrays.copyOf(response, response.length));
                     alldump = alldump + Util.bytesToHex(allBlocks[i - 3]);
                 }
+                
                 int current = Integer.parseInt(alldump.substring(4, 6), 16);
                 int minutesSinceStart = Integer.parseInt(alldump.substring(586, 588) + alldump.substring(584, 586), 16);
                 float currentGlucose = 0f;
@@ -1079,7 +1083,8 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                     ii++;
                 }
             try{
-                byte[] encoded = Base64.getEncoder().encode(allBlocks);
+                byte[] allBolcksOneArray = baos.toByteArray();
+                byte[] encoded = Base64.getEncoder().encode(allBolcksOneArray);
 
                 respObj.put("currentGlucose",currentGlucose);
                 respObj.put("ii",ii);
