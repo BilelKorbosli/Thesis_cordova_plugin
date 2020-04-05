@@ -1066,7 +1066,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                     response = Arrays.copyOfRange(response, 1, response.length);
                     allBlocks[i - 3] = Arrays.copyOf(response, response.length);
                     try{
-                    baos.write(Arrays.copyOf(response, response.length));
+                    baos.write(allBlocks[i - 3] );
                     }catch(IOException e){
 
                     }
