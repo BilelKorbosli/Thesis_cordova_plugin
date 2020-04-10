@@ -1085,7 +1085,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                     }
                     ii++;
                 }
-                int[] num = new int[args.length];//convert the dump to glucose
+                //int[] num = new int[args.length];//convert the dump to glucose
             try{
 
                 respObj.put("currentGlucose",currentGlucose);
