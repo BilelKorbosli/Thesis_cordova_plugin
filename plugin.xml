@@ -14,10 +14,8 @@
             <uses-permission android:name="android.permission.NFC"/>
             <uses-feature android:name="android.hardware.nfc" android:required="false"/>
         </config-file>
-        <lib-file src="src/android/commons-math3-3.6.jar" />
         <!--<config-file parent="/*" target="AndroidManifest.xml"></config-file>-->
         <source-file src="src/android/FreeStyleLibrePlugin.java" target-dir="src/cordova.plugin.freestylelibre/FreeStyleLibrePlugin" />
         <source-file src="src/android/Util.java" target-dir="src/cordova.plugin.freestylelibre/Util" />
-        <source-file src="src/android/AlgorithmUtil.java" target-dir="src/cordova.plugin.freestylelibre/AlgorithmUtil" />
     </platform>
 </plugin>
