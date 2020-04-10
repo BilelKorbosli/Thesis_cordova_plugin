@@ -39,7 +39,6 @@ import android.os.Parcelable;
 import android.util.Log;
 
 
-import org.apache.commons.math3.stat.regression.SimpleRegression;
 
 /**
  * This class echoes a string called from JavaScript.
@@ -1059,7 +1058,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                 byte[][] allBlocks = new byte[40][8];
                 for(int i=3; i <= 40; i++) { 
                     byte[] cmd = new byte[] {
-                            (byte)0x00, // Flags
+                            (byte)0x60, // Flags
                             (byte)0x20, // Command: Read multiple blocks
                             (byte)i // block (offset)
                     };
