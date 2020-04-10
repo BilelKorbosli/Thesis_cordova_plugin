@@ -1054,22 +1054,22 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                 Method transceiveMethod = tagTechnologyClass.getMethod("transceive", byte[].class);
                 @SuppressWarnings("PrimitiveArrayArgumentToVarargsMethod")
                 String alldump="";
-                JSONObject respObj = new JSONObject();
                 byte[][] allBlocks = new byte[40][8];
+                private byte[] data = new byte[360];
+
                 for(int i=3; i <= 40; i++) { 
                     byte[] cmd = new byte[] {
-                            (byte)0x60, // Flags
+                            (byte)0x00, // Flags
                             (byte)0x20, // Command: Read multiple blocks
                             (byte)i // block (offset)
                     };
-                    //cmd = new byte[]{0x60, 0x20, 0, 0, 0, 0, 0, 0, 0, 0, (byte) i, 0};
-                    cmd = new byte[]{0x02, 0x23, (byte) i, 0x02}; // multi-block read 3 blocks
                     byte[] response = (byte[]) transceiveMethod.invoke(tagTechnology, cmd);
 
                     //response = Arrays.copyOfRange(response, 1, response.length);
                     allBlocks[i - 3] = Arrays.copyOfRange(response,1, response.length);
                     
                     alldump = alldump + Util.bytesToHex(allBlocks[i - 3]);
+                    System.arraycopy(response, 1, data, (i-3) * 8, 8);
                 }
                 
                 int current = Integer.parseInt(alldump.substring(4, 6), 16);
@@ -1086,17 +1086,20 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                     }
                     ii++;
                 }
-                //int[] num = new int[args.length];//convert the dump to glucose
-            try{
 
+                //int[] num = new int[args.length];//convert the dump to glucose
+                JSONObject respObj = new JSONObject();
+            try{
+                
                 respObj.put("currentGlucose",currentGlucose);
                 respObj.put("ii",ii);
                 respObj.put("gg",gg);
                 respObj.put("allDump", alldump);
-                respObj.put("79A0", glucoseReading(Integer.parseInt("A079", 16)));
+                respObj.put("new new ", AlgorithmUtil.parseData(1,tagTechnology,data).toString());
             } catch (JSONException e) {
                 //some exception handler code.
             }  
+                AlgorithmUtil.parseData(1,tagTechnology,data);
                 //byte[] response = (byte[]) transceiveMethod.invoke(tagTechnology, data);
                 //repHex = Util.bytesToHex(response);
                 callbackContext.success(respObj.toString());

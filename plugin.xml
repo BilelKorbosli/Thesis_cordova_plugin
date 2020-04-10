@@ -18,5 +18,6 @@
         <!--<config-file parent="/*" target="AndroidManifest.xml"></config-file>-->
         <source-file src="src/android/FreeStyleLibrePlugin.java" target-dir="src/cordova.plugin.freestylelibre/FreeStyleLibrePlugin" />
         <source-file src="src/android/Util.java" target-dir="src/cordova.plugin.freestylelibre/Util" />
+        <source-file src="src/android/AlgorithmUtil.java" target-dir="src/cordova.plugin.freestylelibre/AlgorithmUtil" />
     </platform>
 </plugin>
