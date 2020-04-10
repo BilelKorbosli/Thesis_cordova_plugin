@@ -1054,7 +1054,6 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                 String alldump="";
                 JSONObject respObj = new JSONObject();
                 byte[][] allBlocks = new byte[40][8];
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 for(int i=3; i <= 40; i++) { 
                     byte[] cmd = new byte[] {
                             (byte)0x00, // Flags
@@ -1065,12 +1064,8 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
 
                     //response = Arrays.copyOfRange(response, 1, response.length);
                     allBlocks[i - 3] = Arrays.copyOfRange(response,1, response.length);
-                    try{
-                    baos.write(Arrays.copyOf(response, response.length));
-                    }catch(IOException e){
-
-                    }
-                    alldump = alldump + Util.bytesToHex(allBlocks[i - 3])+"-";
+                    
+                    alldump = alldump + Util.bytesToHex(allBlocks[i - 3]);
                 }
                 
                 int current = Integer.parseInt(alldump.substring(4, 6), 16);
@@ -1088,8 +1083,6 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                     ii++;
                 }
             try{
-                byte[] allBolcksOneArray = baos.toByteArray();
-                byte[] encoded = Base64.getEncoder().encode(allBolcksOneArray);
 
                 respObj.put("currentGlucose",currentGlucose);
                 respObj.put("ii",ii);
