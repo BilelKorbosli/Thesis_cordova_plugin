@@ -1089,7 +1089,6 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                 respObj.put("gg",gg);
                 respObj.put("allDump", alldump);
                 respObj.put("79A0", glucoseReading(Integer.parseInt("A079", 16)));
-                respObj.put("allBlocks", new String(encoded));
             } catch (JSONException e) {
                 //some exception handler code.
             }  
