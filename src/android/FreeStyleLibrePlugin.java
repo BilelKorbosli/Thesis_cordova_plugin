@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Base64;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 // using wildcard imports so we can support Cordova 3.x
 import org.apache.cordova.*; // Cordova 3.x
@@ -37,8 +36,6 @@ import android.nfc.tech.TagTechnology;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
-
-
 
 /**
  * This class echoes a string called from JavaScript.
@@ -1027,10 +1024,10 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
         // ((0x4531 & 0xFFF) / 6) - 37;
         //int bitmask = 0x0FFF;
         //return Float.valueOf( Float.valueOf((val & bitmask) / 6) - 37);
-        //return Float.valueOf((Float.valueOf((float)(val & 4095) / 6.0F - 37.0F) * 1.088F - 9.2F) / 18.0F) * 0.6141F + 0.8847F;
-       Float processedGlucose = ((val & 0x0FFF) / 6f) - 37f;
-        processedGlucose = ((processedGlucose*1.088f)-9.2f)/18.0f;
-           return processedGlucose;
+        return Float.valueOf((Float.valueOf((float)(val & 4095) / 6.0F - 37.0F) * 1.088F - 9.2F) / 18.0F) * 0.6141F + 0.8847F;
+       //Float processedGlucose = ((val & 0x0FFF) / 6f) - 37f;
+       // processedGlucose = ((processedGlucose*1.088f)-9.2f)/18.0f;
+         //   return processedGlucose;
     }
     /**
      * Send raw commands to the tag and receive the response.
@@ -1054,9 +1051,9 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                 Method transceiveMethod = tagTechnologyClass.getMethod("transceive", byte[].class);
                 @SuppressWarnings("PrimitiveArrayArgumentToVarargsMethod")
                 String alldump="";
+                JSONObject respObj = new JSONObject();
                 byte[][] allBlocks = new byte[40][8];
-                byte[] data = new byte[360];
-
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 for(int i=3; i <= 40; i++) { 
                     byte[] cmd = new byte[] {
                             (byte)0x00, // Flags
@@ -1065,11 +1062,10 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                     };
                     byte[] response = (byte[]) transceiveMethod.invoke(tagTechnology, cmd);
 
-                    //response = Arrays.copyOfRange(response, 1, response.length);
-                    allBlocks[i - 3] = Arrays.copyOfRange(response,1, response.length);
-                    
+                    response = Arrays.copyOfRange(response, 1, response.length);
+                    allBlocks[i - 3] = Arrays.copyOf(response, response.length);
+                    baos.write(Arrays.copyOf(response, response.length));
                     alldump = alldump + Util.bytesToHex(allBlocks[i - 3]);
-                    System.arraycopy(response, 1, data, (i-3) * 8, 8);
                 }
                 
                 int current = Integer.parseInt(alldump.substring(4, 6), 16);
@@ -1086,20 +1082,21 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                     }
                     ii++;
                 }
-
-                //int[] num = new int[args.length];//convert the dump to glucose
-                JSONObject respObj = new JSONObject();
             try{
-                
+                byte[] allBolcksOneArray = baos.toByteArray();
+                byte[] encoded = Base64.getEncoder().encode(allBolcksOneArray);
+                for(int i = 4; i < allBolcksOneArray.length; i++){
+                    Log.d(TAG,Util.bytesToHex(allBolcksOneArray[i]));
+                }
+
                 respObj.put("currentGlucose",currentGlucose);
                 respObj.put("ii",ii);
                 respObj.put("gg",gg);
                 respObj.put("allDump", alldump);
-                respObj.put("new new ", AlgorithmUtil.parseData(1,"fdfd",data).toString());
+                respObj.put("allBlocks", new String(encoded));
             } catch (JSONException e) {
                 //some exception handler code.
             }  
-                //AlgorithmUtil.parseData(1,tagTechnology,data);
                 //byte[] response = (byte[]) transceiveMethod.invoke(tagTechnology, data);
                 //repHex = Util.bytesToHex(response);
                 callbackContext.success(respObj.toString());
