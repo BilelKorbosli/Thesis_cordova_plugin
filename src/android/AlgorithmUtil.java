@@ -71,6 +71,7 @@ public class AlgorithmUtil {
             if (i < 0) i += 32;
             //GlucoseData glucoseData = new GlucoseData();
             JSONObject glucoseData = new JSONObject();
+            try{
             glucoseData.put("glucoseLevel",
                     getGlucose(new byte[]{data[(i * 6 + 125)], data[(i * 6 + 124)]}));
 
@@ -83,6 +84,9 @@ public class AlgorithmUtil {
             glucoseData.put("sensorId", tagId);
             glucoseData.put("sensorTime", time);
             historyList.put(glucoseData);
+        } catch (JSONException e) {
+            //some exception handler code.
+        }  
         }
 
 
@@ -94,21 +98,28 @@ public class AlgorithmUtil {
             if (i < 0) i += 16;
             //GlucoseData glucoseData = new GlucoseData();
             JSONObject glucoseData = new JSONObject();
+            try{
             glucoseData.put("glucoseLevel",
                     getGlucose(new byte[]{data[(i * 6 + 29)], data[(i * 6 + 28)]}));
 
             glucoseData.put("glucoseLevelRaw",
                     getGlucoseRaw(new byte[]{data[(i * 6 + 29)], data[(i * 6 + 28)]}));
             int time = Math.max(0, sensorTime - index);
-
             glucoseData.put("realDate", sensorStartTime + time * MINUTE);
             glucoseData.put("sensorId", tagId);
             glucoseData.put("sensorTime", time);
             trendList.put(glucoseData);
+        } catch (JSONException e) {
+            //some exception handler code.
+        }  
         }
         JSONObject result = new JSONObject();
+        try{
         result.put("Glucose", historyList);
         result.put("Trend", trendList);
+    } catch (JSONException e) {
+        //some exception handler code.
+    }  
         return result;
         //PredictionData predictedGlucose = getPredictionData(attempt, tagId, trendList);
         //return new ReadingData(predictedGlucose, trendList, historyList);
