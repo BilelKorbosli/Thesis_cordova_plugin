@@ -1055,7 +1055,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                 @SuppressWarnings("PrimitiveArrayArgumentToVarargsMethod")
                 String alldump="";
                 byte[][] allBlocks = new byte[40][8];
-                private byte[] data = new byte[360];
+                byte[] data = new byte[360];
 
                 for(int i=3; i <= 40; i++) { 
                     byte[] cmd = new byte[] {
