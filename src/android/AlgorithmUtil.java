@@ -73,10 +73,10 @@ public class AlgorithmUtil {
             JSONObject glucoseData = new JSONObject();
             try{
             glucoseData.put("glucoseLevel",
-                    getGlucose(new byte[]{data[(i * 6 + 125)], data[(i * 6 + 124)]}));
+                    getGlucose(new byte[]{data[(i + 125)], data[(i + 124)]}));
 
             glucoseData.put("glucoseLevelRaw",
-                    getGlucoseRaw(new byte[]{data[(i * 6 + 125)], data[(i * 6 + 124)]}));
+                    getGlucoseRaw(new byte[]{data[(i  + 125)], data[(i  + 124)]}));
 
             int time = Math.max(0, Math.abs((sensorTime - 3) / 15) * 15 - index * 15);
 
@@ -100,10 +100,10 @@ public class AlgorithmUtil {
             JSONObject glucoseData = new JSONObject();
             try{
             glucoseData.put("glucoseLevel",
-                    getGlucose(new byte[]{data[(i * 6 + 29)], data[(i * 6 + 28)]}));
+                    getGlucose(new byte[]{data[(i  + 29)], data[(i + 28)]}));
 
             glucoseData.put("glucoseLevelRaw",
-                    getGlucoseRaw(new byte[]{data[(i * 6 + 29)], data[(i * 6 + 28)]}));
+                    getGlucoseRaw(new byte[]{data[(i + 29)], data[(i  + 28)]}));
             int time = Math.max(0, sensorTime - index);
             glucoseData.put("realDate", sensorStartTime + time * MINUTE);
             glucoseData.put("sensorId", tagId);
