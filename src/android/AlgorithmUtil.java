@@ -51,7 +51,7 @@ public class AlgorithmUtil {
 
     
 
-    public static JSONArray parseData(int attempt, String tagId, byte[] data) {
+    public static JSONObject parseData(int attempt, String tagId, byte[] data) {
         long watchTime = System.currentTimeMillis();
 
         int indexTrend = data[26] & 0xFF;
