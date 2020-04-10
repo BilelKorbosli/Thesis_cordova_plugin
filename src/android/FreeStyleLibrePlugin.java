@@ -1086,7 +1086,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                 byte[] allBolcksOneArray = baos.toByteArray();
                 byte[] encoded = Base64.getEncoder().encode(allBolcksOneArray);
                 for(int i = 4; i < allBolcksOneArray.length; i++){
-                    Log.d(TAG,Util.bytesToHex(allBolcksOneArray[i]);
+                    Log.d(TAG,Util.bytesToHex(allBolcksOneArray[i]));
                 }
 
                 respObj.put("currentGlucose",currentGlucose);
