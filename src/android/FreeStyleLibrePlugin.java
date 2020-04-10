@@ -1095,11 +1095,11 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                 respObj.put("ii",ii);
                 respObj.put("gg",gg);
                 respObj.put("allDump", alldump);
-                respObj.put("new new ", AlgorithmUtil.parseData(1,tagTechnology,data).toString());
+                respObj.put("new new ", AlgorithmUtil.parseData(1,"fdfd",data).toString());
             } catch (JSONException e) {
                 //some exception handler code.
             }  
-                AlgorithmUtil.parseData(1,tagTechnology,data);
+                //AlgorithmUtil.parseData(1,tagTechnology,data);
                 //byte[] response = (byte[]) transceiveMethod.invoke(tagTechnology, data);
                 //repHex = Util.bytesToHex(response);
                 callbackContext.success(respObj.toString());

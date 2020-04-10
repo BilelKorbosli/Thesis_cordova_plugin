@@ -115,21 +115,21 @@ public class AlgorithmUtil {
 
     }
 
-    @NonNull
-    private static String getPredictionData(int attempt, String tagId, ArrayList<GlucoseData> trendList) {
-        PredictionData predictedGlucose = new PredictionData();
-        SimpleRegression regression = new SimpleRegression();
-        for (int i = 0; i < trendList.size(); i++) {
-            regression.addData(trendList.size() - i, (trendList.get(i)).glucoseLevel);
-        }
-        predictedGlucose.glucoseLevel = (int)regression.predict(15 + PREDICTION_TIME);
-        predictedGlucose.trend = regression.getSlope();
-        predictedGlucose.confidence = regression.getSlopeConfidenceInterval();
-        predictedGlucose.errorCode = PredictionData.Result.OK;
-        predictedGlucose.realDate = trendList.get(0).realDate;
-        predictedGlucose.sensorId = tagId;
-        predictedGlucose.attempt = attempt;
-        predictedGlucose.sensorTime = trendList.get(0).sensorTime;
-        return predictedGlucose;
-    }
+    // @NonNull
+    // private static String getPredictionData(int attempt, String tagId, ArrayList<GlucoseData> trendList) {
+    //     PredictionData predictedGlucose = new PredictionData();
+    //     SimpleRegression regression = new SimpleRegression();
+    //     for (int i = 0; i < trendList.size(); i++) {
+    //         regression.addData(trendList.size() - i, (trendList.get(i)).glucoseLevel);
+    //     }
+    //     predictedGlucose.glucoseLevel = (int)regression.predict(15 + PREDICTION_TIME);
+    //     predictedGlucose.trend = regression.getSlope();
+    //     predictedGlucose.confidence = regression.getSlopeConfidenceInterval();
+    //     predictedGlucose.errorCode = PredictionData.Result.OK;
+    //     predictedGlucose.realDate = trendList.get(0).realDate;
+    //     predictedGlucose.sensorId = tagId;
+    //     predictedGlucose.attempt = attempt;
+    //     predictedGlucose.sensorTime = trendList.get(0).sensorTime;
+    //     return predictedGlucose;
+    // }
 }
