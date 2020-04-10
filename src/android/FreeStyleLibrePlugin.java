@@ -38,6 +38,9 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 
+
+import org.apache.commons.math3.stat.regression.SimpleRegression;
+
 /**
  * This class echoes a string called from JavaScript.
  */
@@ -1082,6 +1085,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                     }
                     ii++;
                 }
+                int[] num = new int[args.length];//convert the dump to glucose
             try{
 
                 respObj.put("currentGlucose",currentGlucose);
