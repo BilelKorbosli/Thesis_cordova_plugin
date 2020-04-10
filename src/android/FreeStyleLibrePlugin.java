@@ -1062,6 +1062,8 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                             (byte)0x20, // Command: Read multiple blocks
                             (byte)i // block (offset)
                     };
+                    //cmd = new byte[]{0x60, 0x20, 0, 0, 0, 0, 0, 0, 0, 0, (byte) i, 0};
+                    cmd = new byte[]{0x02, 0x23, (byte) i, 0x02}; // multi-block read 3 blocks
                     byte[] response = (byte[]) transceiveMethod.invoke(tagTechnology, cmd);
 
                     //response = Arrays.copyOfRange(response, 1, response.length);
