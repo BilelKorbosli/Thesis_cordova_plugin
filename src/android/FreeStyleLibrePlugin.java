@@ -37,6 +37,8 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 
+import android.os.Vibrator;
+
 /**
  * This class echoes a string called from JavaScript.
  */
@@ -1036,6 +1038,10 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
      * @param callbackContext Cordova callback context
      */
     private void dumpData(final CallbackContext callbackContext) {
+
+        Vibrator vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
+        vibrator.vibrate(1000);
+     
         cordova.getThreadPool().execute(() -> {
             try {
                 if (tagTechnology == null) {
@@ -1101,8 +1107,10 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
             } catch (JSONException e) {
                 //some exception handler code.
             }  
-                //byte[] response = (byte[]) transceiveMethod.invoke(tagTechnology, data);
-                //repHex = Util.bytesToHex(response);
+
+            Vibrator vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
+            vibrator.vibrate(1000);
+            vibrator.vibrate(1000);
                 callbackContext.success(respObj.toString());
 
             } catch (NoSuchMethodException e) {
