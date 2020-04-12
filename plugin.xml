@@ -12,6 +12,7 @@
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.NFC"/>
+            <uses-permission android:name="android.permission.VIBRATE"/>
             <uses-feature android:name="android.hardware.nfc" android:required="false"/>
         </config-file>
         <!--<config-file parent="/*" target="AndroidManifest.xml"></config-file>-->
