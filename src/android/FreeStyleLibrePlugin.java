@@ -1072,27 +1072,10 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                     alldump = alldump + Util.bytesToHex(allBlocks[i - 3]);
                 }
                 
-                
-                int current = Integer.parseInt(alldump.substring(4, 6), 16);
-                int minutesSinceStart = Integer.parseInt(alldump.substring(586, 588) + alldump.substring(584, 586), 16);
-                
-                int MINUTE = 60000;
-                long watchTime = System.currentTimeMillis();
-                int sensorTime = 256 * minutesSinceStart & 0xFFFF ;
-                long sensorStartTime = watchTime - sensorTime * MINUTE;
+            
+                long phonetime = System.currentTimeMillis();
                 float currentGlucose = 0f;
 
-                int ii = 0;
-                String gg = "";
-                for (int i = 8; i < 188; i += 12) {
-                    final String g = alldump.substring(i + 2, i + 4) + alldump.substring(i, i + 2);
-
-                    if (current == ii) {
-                        currentGlucose = glucoseReading(Integer.parseInt(g, 16));
-                        gg =g;
-                    }
-                    ii++;
-                }
             try{
                 byte[] allBolcksOneArray = baos.toByteArray();
                 byte[] encoded = Base64.getEncoder().encode(allBolcksOneArray);
@@ -1104,11 +1087,9 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                     GlucoseValues.put(glucoseReading(Integer.parseInt(sub, 16)));
                 }
 
-                respObj.put("current time",sensorStartTime);
-                respObj.put("ii",ii);
-                respObj.put("gg",gg);
                 respObj.put("allDump", alldump);
                 respObj.put("GlucoseVal", GlucoseValues);
+                respObj.put("0x04", allBolcksOneArray);
             } catch (JSONException e) {
                 //some exception handler code.
             }  
