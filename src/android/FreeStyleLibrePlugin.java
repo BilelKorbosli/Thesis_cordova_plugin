@@ -1082,9 +1082,17 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
 
                 String data =  Util.bytesToHex(allBolcksOneArray);
                 JSONArray GlucoseValues = new JSONArray();
+                int row = 0;
                 for(int i=8; i< data.length(); i+=12){
+                    JSONObject val = new JSONObject();
                     final String sub = alldump.substring(i + 2, i + 4) + alldump.substring(i, i + 2);
-                    GlucoseValues.put(glucoseReading(Integer.parseInt(sub, 16)));
+                    val.put("GVal", glucoseReading(Integer.parseInt(sub, 16)));
+                    if(row<16){
+                        val.put("TVal", phonetime-(raw*60000));
+                    }else{
+                        val.put("TVal", phonetime-((raw%15)*60000*15));
+                    }
+                    GlucoseValues.put(val);
                 }
 
                 respObj.put("allDump", alldump);
