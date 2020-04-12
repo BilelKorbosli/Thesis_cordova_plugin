@@ -1042,7 +1042,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
     private void dumpData(final CallbackContext callbackContext) {
         //Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
         Vibrator vibrator = (Vibrator) this.cordova.getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(500);
+        vibrator.vibrate(300);
      
         cordova.getThreadPool().execute(() -> {
             try {
@@ -1109,21 +1109,21 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
             } catch (JSONException e) {
                 //some exception handler code.
             }  
-
-            vibrator.vibrate(500);
+            
+                vibrator.vibrate(500);
                 callbackContext.success(respObj.toString());
 
             } catch (NoSuchMethodException e) {
-                vibrator.vibrate(3000);
+                vibrator.vibrate(1500);
                 String error = "TagTechnology " + tagTechnologyClass.getName() + " does not have a transceive function";
                 Log.e(TAG, error, e);
                 callbackContext.error(error);
             } catch (IllegalAccessException e) {
-                vibrator.vibrate(3000);
+                vibrator.vibrate(1500);
                 Log.e(TAG, e.getMessage(), e);
                 callbackContext.error(e.getMessage());
             } catch (InvocationTargetException e) {
-                vibrator.vibrate(3000);
+                vibrator.vibrate(1500);
                 Log.e(TAG, e.getMessage(), e);
                 Throwable cause = e.getCause();
                 callbackContext.error(cause.getMessage());
