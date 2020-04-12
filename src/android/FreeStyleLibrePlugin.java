@@ -1078,8 +1078,8 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                 
                 int MINUTE = 60000;
                 long watchTime = System.currentTimeMillis();
-                int sensorTime = 256 * minutesSinceStart & 0x0FFF ;
-                long sensorStartTime =  sensorTime * MINUTE;
+                int sensorTime = 256 * minutesSinceStart & 0xFFFF ;
+                long sensorStartTime = watchTime - sensorTime * MINUTE;
                 float currentGlucose = 0f;
 
                 int ii = 0;
