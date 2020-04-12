@@ -1024,10 +1024,10 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
         // ((0x4531 & 0xFFF) / 6) - 37;
         //int bitmask = 0x0FFF;
         //return Float.valueOf( Float.valueOf((val & bitmask) / 6) - 37);
-        //return Float.valueOf((Float.valueOf((float)(val & 4095) / 6.0F - 37.0F) * 1.088F - 9.2F) / 18.0F) * 0.6141F + 0.8847F;
-       Float processedGlucose = ((val & 0x0FFF) / 6f) - 37f;
-        processedGlucose = ((processedGlucose*1.088f)-9.2f)/18.0f;
-           return processedGlucose;
+        return Float.valueOf((Float.valueOf((float)(val & 4095) / 6.0F - 37.0F) * 1.088F - 9.2F) / 18.0F) * 0.6141F + 0.8847F;
+       //Float processedGlucose = ((val & 0x0FFF) / 6f) - 37f;
+        //processedGlucose = ((processedGlucose*1.088f)-9.2f)/18.0f;
+         //  return processedGlucose;
     }
     /**
      * Send raw commands to the tag and receive the response.
