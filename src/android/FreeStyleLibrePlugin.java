@@ -102,11 +102,8 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
     private CallbackContext channelCallback;
     private CallbackContext shareTagCallback;
     private CallbackContext handoverCallback;
-    private Context mContext;
 
-    public FreeStyleLibrePlugin(Context context){
-        mContext = context;
-    }
+
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
 
@@ -1043,8 +1040,9 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
      * @param callbackContext Cordova callback context
      */
     private void dumpData(final CallbackContext callbackContext) {
-        //Vibrator vibrator = (Vibrator)getSystemService(mContext.VIBRATOR_SERVICE);
-        //vibrator.vibrate(1000);
+        //Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+        Vibrator vibrator = (Vibrator) this.cordova.getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(1000);
      
         cordova.getThreadPool().execute(() -> {
             try {
@@ -1108,7 +1106,6 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
 
                 respObj.put("allDump", alldump);
                 respObj.put("GlucoseVal", GlucoseValues);
-                respObj.put("debug", mContext.VIBRATOR_SERVICE);
             } catch (JSONException e) {
                 //some exception handler code.
             }  
