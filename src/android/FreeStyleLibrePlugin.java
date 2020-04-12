@@ -37,6 +37,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 
+import android.content.Context;
 import android.os.Vibrator;
 
 /**
@@ -1039,7 +1040,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
      */
     private void dumpData(final CallbackContext callbackContext) {
         Context context=this.cordova.getActivity().getApplicationContext(); 
-        Vibrator vibrator = (Vibrator)getSystemService(context.VIBRATOR_SERVICE);
+        Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(1000);
      
         cordova.getThreadPool().execute(() -> {
