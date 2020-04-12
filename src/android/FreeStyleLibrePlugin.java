@@ -1110,21 +1110,20 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                 //some exception handler code.
             }  
 
-            //vibrator.vibrate(1000);
             vibrator.vibrate(500);
                 callbackContext.success(respObj.toString());
 
             } catch (NoSuchMethodException e) {
-                //vibrator.vibrate(3000);
+                vibrator.vibrate(3000);
                 String error = "TagTechnology " + tagTechnologyClass.getName() + " does not have a transceive function";
                 Log.e(TAG, error, e);
                 callbackContext.error(error);
             } catch (IllegalAccessException e) {
-                //vibrator.vibrate(3000);
+                vibrator.vibrate(3000);
                 Log.e(TAG, e.getMessage(), e);
                 callbackContext.error(e.getMessage());
             } catch (InvocationTargetException e) {
-                //vibrator.vibrate(3000);
+                vibrator.vibrate(3000);
                 Log.e(TAG, e.getMessage(), e);
                 Throwable cause = e.getCause();
                 callbackContext.error(cause.getMessage());
