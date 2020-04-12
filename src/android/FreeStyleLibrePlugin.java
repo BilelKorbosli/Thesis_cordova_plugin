@@ -1038,8 +1038,8 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
      * @param callbackContext Cordova callback context
      */
     private void dumpData(final CallbackContext callbackContext) {
-
-        Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+        Context context=this.cordova.getActivity().getApplicationContext(); 
+        Vibrator vibrator = (Vibrator)getSystemService(context.VIBRATOR_SERVICE);
         vibrator.vibrate(1000);
      
         cordova.getThreadPool().execute(() -> {
