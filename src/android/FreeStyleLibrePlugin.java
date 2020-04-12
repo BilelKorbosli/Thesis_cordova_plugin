@@ -1022,9 +1022,9 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
     }
     private float glucoseReading(int val) {
         // ((0x4531 & 0xFFF) / 6) - 37;
-        //int bitmask = 0x0FFF;
-        //return Float.valueOf( Float.valueOf((val & bitmask) / 6) - 37);
-        return Float.valueOf((Float.valueOf((float)(val & 4095) / 6.0F - 37.0F) * 1.088F - 9.2F) / 18.0F) * 0.6141F + 0.8847F;
+        int bitmask = 0x0FFF;
+        return Float.valueOf( Float.valueOf((val & bitmask) / 6) - 37);
+        //return Float.valueOf((Float.valueOf((float)(val & 4095) / 6.0F - 37.0F) * 1.088F - 9.2F) / 18.0F) * 0.6141F + 0.8847F;
        //Float processedGlucose = ((val & 0x0FFF) / 6f) - 37f;
        // processedGlucose = ((processedGlucose*1.088f)-9.2f)/18.0f;
          //   return processedGlucose;
@@ -1072,9 +1072,16 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                     alldump = alldump + Util.bytesToHex(allBlocks[i - 3]);
                 }
                 
+                
                 int current = Integer.parseInt(alldump.substring(4, 6), 16);
                 int minutesSinceStart = Integer.parseInt(alldump.substring(586, 588) + alldump.substring(584, 586), 16);
+                
+                int MINUTE = 60000;
+                long watchTime = System.currentTimeMillis();
+                int sensorTime = 256 * minutesSinceStart & 0x0FFF ;
+                long sensorStartTime = watchTime - sensorTime * MINUTE;
                 float currentGlucose = 0f;
+
                 int ii = 0;
                 String gg = "";
                 for (int i = 8; i < 188; i += 12) {
@@ -1097,7 +1104,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                     GlucoseValues.put(glucoseReading(Integer.parseInt(sub, 16)));
                 }
 
-                respObj.put("currentGlucose",currentGlucose);
+                respObj.put("current time",sensorStartTime);
                 respObj.put("ii",ii);
                 respObj.put("gg",gg);
                 respObj.put("allDump", alldump);
