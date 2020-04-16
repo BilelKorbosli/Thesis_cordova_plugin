@@ -18,7 +18,7 @@ $ionic corova plugin add [https://github.com/BilelKorbosli/Thesis_cordova_plugin
   
 ### Usage  
   
-Check the [demo code](#) for all the tricks in the book, or read on for some copy-pasteable samples.  
+
   
 Make sure to wait for `deviceready` before using any of these functions.
 
