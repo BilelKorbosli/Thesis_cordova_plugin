@@ -527,7 +527,7 @@ var nfc = {
         });
 
     },
-    EnableNFC: function(){
+    EnableNFC: function(resolve,reject){
             cordova.exec(resolve, reject, 'FreeStyleLibrePlugin', 'Start_NFC',[]);
 
     },
