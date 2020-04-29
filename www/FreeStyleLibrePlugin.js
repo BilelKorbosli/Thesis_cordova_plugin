@@ -486,15 +486,6 @@ var nfc = {
         cordova.exec(win, fail, "FreeStyleLibrePlugin", "showSettings", []);
     },
 
-    // iOS only
-    beginSession: function (win, fail) {
-        cordova.exec(win, fail, "FreeStyleLibrePlugin", "beginSession", []);
-    },
-
-    // iOS only
-    invalidateSession: function (win, fail) {
-        cordova.exec(win, fail, "FreeStyleLibrePlugin", "invalidateSession", []);
-    },
 
     connect: function(tech, timeout) {
         return new Promise(function(resolve, reject) {
@@ -536,6 +527,11 @@ var nfc = {
         });
 
     },
+    EnableNFC: function(){
+            cordova.exec(resolve, reject, 'FreeStyleLibrePlugin', 'Start_NFC',[]);
+
+    },
+    
     // Android NfcAdapter.enableReaderMode flags 
     FLAG_READER_NFC_A: 0x1,
     FLAG_READER_NFC_B: 0x2,
