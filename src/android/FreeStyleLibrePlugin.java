@@ -127,10 +127,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
             disableReaderMode(callbackContext);
             return true; // short circuit
         }
-        if (action.equalsIgnoreCase("Start_NFC")) {
-                startNfc();
-            return true; // short circuit
-        }
+      
         if (!getNfcStatus().equals(STATUS_NFC_OK)) {
             callbackContext.error(getNfcStatus());
             return true; // short circuit
@@ -558,8 +555,8 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
 
         getActivity().runOnUiThread(() -> {
             NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(getActivity());
-            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-            /*if (nfcAdapter != null && !getActivity().isFinishing()) {
+
+            if (nfcAdapter != null && !getActivity().isFinishing()) {
                 try {
                     IntentFilter[] intentFilters = getIntentFilters();
                     String[][] techLists = getTechLists();
@@ -577,7 +574,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                     Log.w(TAG, "Illegal State Exception starting NFC. Assuming application is terminating.");
                 }
 
-            }*/
+            }
         });
     }
 
