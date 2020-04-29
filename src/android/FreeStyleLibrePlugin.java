@@ -127,7 +127,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
             disableReaderMode(callbackContext);
             return true; // short circuit
         }
-        if (!getNfcStatus().equals("Start_NFC")) {
+        if (action.equalsIgnoreCase("Start_NFC")) {
                 startNfc();
             return true; // short circuit
         }
