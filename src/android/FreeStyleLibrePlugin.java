@@ -1177,6 +1177,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
             
                 long phonetime = System.currentTimeMillis();
                 float currentGlucose = 0f;
+                JSONObject val = new JSONObject();
 
             try{
                 byte[] allBolcksOneArray = baos.toByteArray();
@@ -1185,7 +1186,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                 String data =  Util.bytesToHex(allBolcksOneArray);
 
 
-                    JSONObject val = new JSONObject();
+                    
                     final String sub = alldump.substring(8 + 2, 8 + 4) + alldump.substring(8, 8 + 2);
                     val.put("GVal", glucoseReading(Integer.parseInt(sub, 16)));
 
