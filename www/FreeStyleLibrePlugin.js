@@ -527,10 +527,6 @@ var nfc = {
         });
 
     },
-    EnableNFC: function(resolve,reject){
-            cordova.exec(resolve, reject, 'FreeStyleLibrePlugin', 'Start_NFC',[]);
-
-    },
     
     // Android NfcAdapter.enableReaderMode flags 
     FLAG_READER_NFC_A: 0x1,
