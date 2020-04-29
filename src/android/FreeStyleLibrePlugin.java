@@ -553,10 +553,13 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
     private void startNfc() {
         createPendingIntent(); // onResume can call startNfc before execute
 
+
+        
+
         getActivity().runOnUiThread(() -> {
             NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(getActivity());
-
-            if (nfcAdapter != null && !getActivity().isFinishing()) {
+            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+            /*if (nfcAdapter != null && !getActivity().isFinishing()) {
                 try {
                     IntentFilter[] intentFilters = getIntentFilters();
                     String[][] techLists = getTechLists();
@@ -574,7 +577,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                     Log.w(TAG, "Illegal State Exception starting NFC. Assuming application is terminating.");
                 }
 
-            }
+            }*/
         });
     }
 
