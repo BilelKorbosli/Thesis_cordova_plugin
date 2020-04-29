@@ -1190,7 +1190,7 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
                     final String sub = alldump.substring(8 + 2, 8 + 4) + alldump.substring(8, 8 + 2);
                     val.put("GVal", glucoseReading(Integer.parseInt(sub, 16)));
 
-                    val.put("TVal", phonetime-(row*60000));
+                    val.put("TVal", phonetime);
 
             } catch (JSONException e) {
                 //some exception handler code.
