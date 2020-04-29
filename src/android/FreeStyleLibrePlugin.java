@@ -88,7 +88,8 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
     private static final String STATUS_NDEF_PUSH_DISABLED = "NDEF_PUSH_DISABLED";
 
     private static final String GLUCOSE_CONVERT = "GLUCOSE_CONVERT";
-
+    private static final String CURRENT_VAL = "CURRENT_VAL";
+    
     private static final String TAG = "NfcPlugin";
     private final List<IntentFilter> intentFilters = new ArrayList<>();
     private final ArrayList<String[]> techLists = new ArrayList<>();
@@ -146,6 +147,9 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
 
         } else if (action.equalsIgnoreCase(REGISTER_MIME_TYPE)) {
             registerMimeType(data, callbackContext);
+
+        }else if (action.equalsIgnoreCase(CURRENT_VAL)) {
+            CurrentVal(callbackContext);
 
         } else if (action.equalsIgnoreCase(REMOVE_MIME_TYPE)) {
             removeMimeType(data, callbackContext);
@@ -1115,6 +1119,84 @@ public class FreeStyleLibrePlugin extends CordovaPlugin implements NfcAdapter.On
             
                 vibrator.vibrate(500);
                 callbackContext.success(respObj.toString());
+
+            } catch (NoSuchMethodException e) {
+                vibrator.vibrate(1500);
+                String error = "TagTechnology " + tagTechnologyClass.getName() + " does not have a transceive function";
+                Log.e(TAG, error, e);
+                callbackContext.error(error);
+            } catch (IllegalAccessException e) {
+                vibrator.vibrate(1500);
+                Log.e(TAG, e.getMessage(), e);
+                callbackContext.error(e.getMessage());
+            } catch (InvocationTargetException e) {
+                vibrator.vibrate(1500);
+                Log.e(TAG, e.getMessage(), e);
+                Throwable cause = e.getCause();
+                callbackContext.error(cause.getMessage());
+            }
+        });
+    }
+    private void CurrentVal(final CallbackContext callbackContext) {
+        //Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+        Vibrator vibrator = (Vibrator) this.cordova.getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(300);
+     
+        cordova.getThreadPool().execute(() -> {
+            try {
+                if (tagTechnology == null) {
+                    Log.e(TAG, "No Tech");
+                    callbackContext.error("No Tech");
+                    return;
+                }
+                if (!tagTechnology.isConnected()) {
+                    Log.e(TAG, "Not connected");
+                    callbackContext.error("Not connected");
+                    return;
+                }
+                Method transceiveMethod = tagTechnologyClass.getMethod("transceive", byte[].class);
+                @SuppressWarnings("PrimitiveArrayArgumentToVarargsMethod")
+                byte[][] allBlocks = new byte[3][8];
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                for(int i=3; i <= 5; i++) { 
+                    byte[] cmd = new byte[] {
+                            (byte)0x00, // Flags
+                            (byte)0x20, // Command: Read multiple blocks
+                            (byte)i // block (offset)
+                    };
+                    byte[] response = (byte[]) transceiveMethod.invoke(tagTechnology, cmd);
+
+                    response = Arrays.copyOfRange(response, 1, response.length);
+                    try{
+                    baos.write(Arrays.copyOf(response, response.length));
+                    } catch(IOException e){
+
+                    }
+                }
+                
+            
+                long phonetime = System.currentTimeMillis();
+                float currentGlucose = 0f;
+
+            try{
+                byte[] allBolcksOneArray = baos.toByteArray();
+                byte[] encoded = Base64.getEncoder().encode(allBolcksOneArray);
+
+                String data =  Util.bytesToHex(allBolcksOneArray);
+
+
+                    JSONObject val = new JSONObject();
+                    final String sub = alldump.substring(8 + 2, 8 + 4) + alldump.substring(8, 8 + 2);
+                    val.put("GVal", glucoseReading(Integer.parseInt(sub, 16)));
+
+                    val.put("TVal", phonetime-(row*60000));
+
+            } catch (JSONException e) {
+                //some exception handler code.
+            }  
+            
+                vibrator.vibrate(500);
+                callbackContext.success(val.toString());
 
             } catch (NoSuchMethodException e) {
                 vibrator.vibrate(1500);

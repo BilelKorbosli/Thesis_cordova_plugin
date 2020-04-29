@@ -527,6 +527,12 @@ var nfc = {
         });
 
     },
+    CurrentVal: function(){
+        return new Promise(function(resolve,reject){
+            cordova.exec(resolve, reject, 'FreeStyleLibrePlugin', 'CurrentVal',[]);
+        });
+
+    },
     
     // Android NfcAdapter.enableReaderMode flags 
     FLAG_READER_NFC_A: 0x1,
